@@ -73,5 +73,11 @@ class User(db.Model):         # Rev. 2018-08-03
     def get_verification(self, email):
         return bcrypt.generate_password_hash(email)
 
+    def set_verified(self):
+        self.verified = ''
+
+    def set_active(self, status = 1):
+        self.active = status
+
 
 db.create_all()

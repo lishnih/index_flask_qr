@@ -2,12 +2,14 @@
 
 {%- block body %}
 
-<table>
-<tr><td><b>Email:</b></td><td>{{ cu.email }}</td></tr>
-<tr><td><b>Name:</b></td><td>{{ cu.name }}</td></tr>
-<tr><td><b>Created:</b></td><td>{{ cu.created }}</td></tr>
-<tr><td><b>Email verified:</b></td><td>{{ verified }}</td></tr>
-</table>
+<p>
+  <table>
+  <tr><td><b>Email:</b></td><td>{{ cu.email }}</td></tr>
+  <tr><td><b>Name:</b></td><td>{{ cu.name }}</td></tr>
+  <tr><td><b>Created:</b></td><td>{{ cu.created }}</td></tr>
+  <tr><td><b>Email verified:</b></td><td>{{ verified }}</td></tr>
+  </table>
+</p>
 
 <p>
   <a href="{{ url_for('index') }}edit">Edit profile</a><br />

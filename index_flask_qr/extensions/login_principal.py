@@ -7,6 +7,7 @@ from flask_principal import (Principal, RoleNeed, UserNeed,
                              Identity, identity_loaded)
 
 from ..app import app
+from .user_models import User
 
 
 # ===== login_manager =====
@@ -39,6 +40,6 @@ def on_identity_loaded(sender, identity):
             identity.provides.add(UserNeed(current_user.id))
 
         user = User.query.filter_by(id=identity.id).first()
-        if user:
+        if user and hasattr(user, 'groups'):
             for i in user.groups:
                 identity.provides.add(RoleNeed(i.name))

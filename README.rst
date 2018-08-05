@@ -1,6 +1,6 @@
-*************
-index_flask
-*************
+**************
+index_flask_qr
+**************
 
 **Installation**
 
@@ -11,18 +11,18 @@ index_flask
 
 **After installation**
 
-- First change SECRET_KEY in the config file: *index_flask/config.py*
+- First change SECRET_KEY in the config file: *index_flask_qr/config.py*
 - Run to initialize first user:
 
 ::
 
-  $ index_flask-initialize_app.py
+  $ index_flask_qr-initialize.py
 
 - Now you can run the package:
 
 ::
 
-  $ index_flask-standalone.py
+  $ index_flask_qr-standalone.py
 
 - And open in your preferred browser next link:
     http://localhost:5000/

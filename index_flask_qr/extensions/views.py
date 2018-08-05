@@ -7,6 +7,8 @@ from __future__ import (division, absolute_import,
 
 from flask import render_template
 
+from flask_login import current_user
+
 from ..app import app
 
 
@@ -15,8 +17,9 @@ def index():
 #   return app.send_static_file('index.html')
     return render_template('empty.html',
              title = 'Index',
-             head = 'Welcome',
-             html = 'Welcome to the index system!',
+             head = 'Welcome!' if current_user.is_anonymous else \
+                    'Welcome, {0}!'.format(current_user.name),
+             html = 'Welcome to the QR Index system!',
            )
 
 

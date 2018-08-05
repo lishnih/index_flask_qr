@@ -3,10 +3,10 @@
 {%- block body %}
 
 <p>
-Welcome {{ name }}!<br />
+Welcome, <i><b>{{ name }}</b></i>!<br />
 Are you sure you want to delete the account?<br />
 </p>
 
-<a href="?confirm=yes&next=/">Logout</a>
+<a href="{{ url_for('user_logout') }}?next={{ next }}">Delete</a>
 
 {%- endblock %}

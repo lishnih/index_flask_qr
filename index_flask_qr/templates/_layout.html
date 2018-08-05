@@ -7,7 +7,7 @@
   <meta name="keywords" content="python flask">
   <meta name="description" content="index">
   <meta name="author" content="">
-  <link rel="icon" href="/favicon.ico">
+  <link rel="icon" href="favicon.ico">
 
   {%- if title %}
   <title>{{ title }}</title>
@@ -66,7 +66,9 @@
           <a class="nav-link" href="docs">Docs</a>
         </li>
         <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="favorites" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Favorites</a>
+          <a class="nav-link dropdown-toggle" href="favorites" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Favorites
+          </a>
           <div class="dropdown-menu" aria-labelledby="dropdown01">
             <a class="dropdown-item" href="addpage">Add current page</a>
           </div>
@@ -77,12 +79,23 @@
         <button class="btn btn-outline-success my-2 my-sm-0 mr-sm-3" type="submit">Search</button>
       </form>
     </div>
-    <!--button type="button" class="btn btn-outline-success" data-toggle="modal" data-target="#SignupModal">
-      Sign in
-    </button-->
-    <a class="nav-link" href="signin" data-toggle="modal" data-target="#SignupModal">
-      Sign in/Sign up
-    </a>
+    <div id="anonymous_section">
+      <!--button type="button" class="btn btn-outline-success" data-toggle="modal" data-target="#SignupModal">
+        Sign in
+      </button-->
+      <a class="nav-link" href="signin" data-toggle="modal" data-target="#SignupModal">
+        Sign in/Sign up
+      </a>
+    </div>
+    <div class="dropdown" id="user_section" style="display: none;">
+      <a class="nav-link dropdown-toggle" href="profile" id="dropdown02" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        Profile
+      </a>
+      <div class="dropdown-menu" aria-labelledby="dropdown02">
+        <a class="dropdown-item" href="profile" id="profile">Profile</a>
+        <a class="dropdown-item" href="logout" id="logout">Log out</a>
+      </div>
+    </div>
   </nav>
 
 
@@ -223,6 +236,61 @@
     </div>
   </div>
 
+
+
+  <!-- Registration complete modal -->
+  <div class="modal fade" id="WelcomeModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+
+        <div class="modal-header">
+          <h5 class="modal-title">Thank you for registering</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+
+        <div class="modal-body">
+          <p>
+            Registration completed successfully!<br />
+            Welcome to the site!
+          </p>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+
+
+  <!-- Info modal -->
+  <div class="modal fade" id="InfoModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+
+        <div class="modal-header">
+          <h5 class="modal-title">Message</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+
+        <div class="modal-body">
+          <p id="info"></p>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
 </header>
 
 
@@ -234,6 +302,22 @@
   <div id="content">
     {%- block body %}
     {%- endblock %}
+  </div>
+
+
+
+  <div id="webcam">
+    <p>
+      <video id="video" autoplay="autoplay"></video>
+    </p>
+    <p>
+      <input type="button" id="buttonSnap" value="Take screenshot" disabled="disabled" onclick="snapshot()" />
+    </p>
+    <p>
+      <input type="button" id="buttonStart" value="Start" disabled="disabled" onclick="start()" />
+      <input type="button" id="buttonStop" value="Stop" disabled="disabled" onclick="stop()" />
+    </p>
+    <p><canvas id="canvas"></canvas></p>
   </div>
 
 </main>
@@ -253,14 +337,19 @@
 
 <!-- Bootstrap core JavaScript -->
 <!-- Placed at the end of the document so the pages load faster -->
-<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<!--script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script-->
+<script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 <script src="{{ url_for('index') }}assets/js/vendor/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
 
 
 
 <!-- Custom scripts -->
+<script src="{{ url_for('index') }}assets/js/string.format-1.0.packed.js"></script>
 <script src="{{ url_for('index') }}js/debug.js"></script>
+<script src="{{ url_for('index') }}js/functions.js"></script>
+<script src="{{ url_for('index') }}js/user.js"></script>
+<script src="{{ url_for('index') }}js/webcam.js"></script>
 
 
 
@@ -268,18 +357,86 @@
 
 jQuery( function($) {
 
+  update_user_section();
+
   $('form#search').submit(function() {
-    $('#debug').text(JSON.stringify($(this).serializeObject()));
+    form = $(this);
+    $('#debug').text(JSON.stringify(form.serializeObject()));
+
     return false;
   });
 
   $('form#signin').submit(function() {
-    $('#debug').text(JSON.stringify($(this).serializeObject()));
+    form = $(this);
+    $('#debug').text(JSON.stringify(form.serializeObject()));
+
+    $.ajax({
+      type: "POST",
+      dataType: "json",
+      url: 'signin',
+//    data: Object.assign({}, form.data(), {'type': 'json'}),
+      data: form.serialize() + '&type=json',
+      success: function(data) {
+        if (data.result == 'error') {
+          $('#info').html(data.message);
+          $('#InfoModal').modal('toggle');
+        } else {
+          $('#SignupModal').modal('toggle');
+
+          update_user_section();
+        }
+      },
+      error: function(data) {
+        $('#debug').html(data.responseText);
+        $('#info').html("Some server issues on request!<br />\n'{0}'".format(data.statusText));
+        $('#InfoModal').modal('toggle');
+      },
+    });
+
     return false;
   });
 
   $('form#signup').submit(function() {
-    $('#debug').text(JSON.stringify($(this).serializeObject()));
+    form = $(this);
+    $('#debug').text(JSON.stringify(form.serializeObject()));
+
+    $.ajax({
+      type: "POST",
+      dataType: "json",
+      url: 'signup',
+      data: form.serialize() + '&type=json',
+      success: function(data) {
+        if (data.result == 'error') {
+          $('#info').html(data.message);
+          $('#InfoModal').modal('toggle');
+        } else {
+          $('#SignupModal').modal('toggle');
+          $('#WelcomeModal').modal('toggle');
+
+          update_user_section();
+        }
+      },
+      error: function(data) {
+        $('#debug').html(data.responseText);
+        $('#info').html("Some server issues on request!<br />\n'{0}'".format(data.statusText));
+        $('#InfoModal').modal('toggle');
+      },
+    });
+
+    return false;
+  });
+
+  $('a#logout').submit(function() {
+    console.log(1);
+    $.post('logout', {'test': 1}).done(function (data) {
+      if (data.result == 'error') {
+        $('#info').html(data.message);
+        $('#InfoModal').modal('toggle');
+      } else {
+        update_user_section();
+      }
+    });
+
     return false;
   });
 

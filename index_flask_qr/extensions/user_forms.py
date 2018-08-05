@@ -9,6 +9,7 @@ from wtforms import (Form, StringField, PasswordField, HiddenField,
                      BooleanField, validators)
 
 from .user_models import User
+from .app_bcrypt import bcrypt
 
 
 class RegistrationForm(Form):
@@ -48,6 +49,7 @@ class LoginForm(Form):
     email = StringField('Email', [validators.Required()])
     password = PasswordField('Password', [validators.Required()])
     remember = BooleanField('Remember me')
+    type = StringField()
 
     def validate(self):
         rv = Form.validate(self)
@@ -60,8 +62,7 @@ class LoginForm(Form):
             self.password.errors.append('Invalid email or password')
             return False
 
-        password = user.get_password(self.password.data)
-        if password != user.password:
+        if not bcrypt.check_password_hash(user.password, self.password.data):
             self.email.errors.append('Invalid email or password')
             self.password.errors.append('Invalid email or password')
             return False

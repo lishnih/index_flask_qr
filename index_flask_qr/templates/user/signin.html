@@ -6,7 +6,7 @@
 
 <h1>Sign in</h1>
 
-<form method=post action="/signin?next={{ next }}">
+<form method=post action="?next={{ next }}">
   <dl>
     {{ render_field(form.email, size=40) }}
     {{ render_field(form.password, size=40) }}

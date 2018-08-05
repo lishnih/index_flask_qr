@@ -1,0 +1,12 @@
+{% extends "_layout_nojs.html" %}
+
+{%- block title %}
+  <title>Dict dumping</title>
+{%- endblock %}
+
+{%- block body %}
+
+{%- from "_debug.html" import dump_dict %}
+{{ dump_dict(obj) }}
+
+{%- endblock %}

@@ -1,0 +1,12 @@
+{% extends "_layout.html" %}
+
+{%- block body %}
+
+<p>
+Welcome {{ name }}!<br />
+Are you sure you want to delete the account?<br />
+</p>
+
+<a href="?confirm=yes&next=/">Logout</a>
+
+{%- endblock %}

@@ -1,0 +1,19 @@
+{% extends "_layout_nojs.html" %}
+
+{%- block title %}
+  <title>List dumping</title>
+{%- endblock %}
+
+{%- block body %}
+
+{%- from "_debug.html" import dump_list, dump_list_a %}
+
+{%- if obj %}
+{{ dump_list(obj) }}
+{%- endif %}
+
+{%- if obj_a %}
+{{ dump_list_a(obj_a) }}
+{%- endif %}
+
+{%- endblock %}

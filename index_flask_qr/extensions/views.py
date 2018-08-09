@@ -21,13 +21,3 @@ def index():
                     'Welcome, {0}!'.format(current_user.name),
              html = 'Welcome to the QR Index system!',
            )
-
-
-@app.route('/json', methods=['GET', 'POST'])
-def json():
-    return 'Response'
-
-
-@app.route("/form")
-def form():
-    return app.send_static_file('index.html')

@@ -23,14 +23,18 @@ from .user_models import db, User
 
 @app.route('/signup', methods=['GET', 'POST'])
 def user_signup():
+    form = RegistrationForm(request.form)
+
     if not current_user.is_anonymous:
+        if form.type.data == 'json':
+            return jsonify({'result': 'error', 'message': 'Already logged!'})
+
         return render_template('user/logout.html',
                  title = 'Logout',
                  name = current_user.name,
                  next = url_for('user_signup'),
                )
 
-    form = RegistrationForm(request.form)
     if request.method == 'POST':
         if form.validate():
             user = User(
@@ -44,8 +48,15 @@ def user_signup():
             login_user(form.user, remember=form.remember.data)
             identity_changed.send(app, identity=Identity(form.user.id))
 
+            if form.type.data == 'json':
+                return jsonify({'result': 'ok'})
+
             flash('Thank you for registering!')
             return redirect(get_next())
+
+        else:
+            if form.type.data == 'json':
+                return jsonify({'result': 'error', 'message': 'Invalid data!'})
 
     return render_template('user/signup.html',
              title = 'Registering new user',
@@ -56,6 +67,8 @@ def user_signup():
 
 @app.route('/signin', methods=['GET', 'POST'])
 def user_signin(user=None):
+    form = LoginForm(request.form)
+
     if not current_user.is_anonymous:
         if form.type.data == 'json':
             return jsonify({'result': 'error', 'message': 'Already logged!'})
@@ -66,7 +79,6 @@ def user_signin(user=None):
                  next = url_for('user_signin'),
                )
 
-    form = LoginForm(request.form)
     if request.method == 'POST':
         if form.validate():
             login_user(form.user, remember=form.remember.data)
@@ -93,15 +105,21 @@ def user_signin(user=None):
 @login_required
 def user_change_password():
     form = ChangePasswordForm(request.form)
-    if request.method == 'POST' and form.validate():
-        form.user.change_password(form.password.data)
-        db.session.commit()
-
-        flash('Successfully changed password')
-        return redirect(get_next())
 
     if request.method == 'POST':
-        return jsonify({'result': 'ok'})
+        if form.validate():
+            form.user.change_password(form.password.data)
+            db.session.commit()
+
+            if form.type.data == 'json':
+                return jsonify({'result': 'ok'})
+
+            flash('Successfully changed password')
+            return redirect(get_next())
+
+        else:
+            if form.type.data == 'json':
+                return jsonify({'result': 'error', 'message': 'Invalid data!'})
 
     return render_template('user/change_password.html',
              title = 'Change Password',
@@ -121,7 +139,7 @@ def user_confirm(code=None):
         status = 'not verified'
 
     if request.method == 'POST':
-        return jsonify({'result': 'ok'})
+        return jsonify({'result': 'ok', 'status': status})
 
     return render_template('user/confirm.html',
              title = 'Confirm email',
@@ -165,7 +183,6 @@ def user_profile():
     if request.method == 'POST':
         return jsonify({
             'result': 'ok',
-            'is_anonymous': current_user.is_anonymous,
             'name': current_user.name,
         })
 
@@ -180,7 +197,10 @@ def user_profile():
 @login_required
 def user_edit():
     if request.method == 'POST':
-        return jsonify({'result': 'ok'})
+        return jsonify({
+            'result': 'ok',
+            'name': current_user.name,
+        })
 
     return render_template('user/edit.html',
              title = 'Edit profile',

@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, user-scalable=yes, initial-scale=1, maximum-scale=1">
+  <meta id="theme-color" name="theme-color" content="#ffffff">
+
+  <title>Scan</title>
+
+  <style>
+    div.select {
+        display: inline-block;
+        margin: 0 0 1em 0;
+    }
+
+    p.small {
+        font-size: 0.7em;
+    }
+
+    label {
+        width: 6em;
+        display: inline-block;
+    }
+
+    .overlay {
+      position: absolute;
+      z-index: 2147483647;
+      background-color: #0f0;
+      right: 30px;
+      top: 50px;
+      text-align: right;
+    }
+  </style>
+
+</head>
+
+<body>
+
+<div class="content">
+
+  <p>
+    <a href=".">Home</a>
+  </p>
+
+  <!--div class="select">
+    <label for="audioSource">Audio source: </label>
+    <select id="audioSource"></select>
+  </div>
+
+  <div class="select">
+    <label for="audioOutput">Audio output: </label>
+    <select id="audioOutput"></select>
+  </div-->
+
+  <div class="select">
+    <label for="videoSource">Video source: </label>
+    <select id="videoSource"></select>
+  </div>
+
+  <div class="button">
+    <button id="fullscreen">Fullscreen</button>
+  </div>
+
+  <div class="container">
+    <video id="video" playsinline autoplay></video>
+  
+    <div class="overlay">
+      <div>Press Snapshot button to proceed...</div>
+      <div class="button">
+        <button id="snapshot">Snapshot</button>
+      </div>
+    </div>
+  </div>
+
+  <!--div class="button">
+    <button id="start">Start</button>
+    <button id="stop">Stop</button>
+  </div-->
+
+  <div>
+    <canvas id="canvas"></canvas>
+  </div>
+
+</div>
+
+
+<pre id="debug">
+</pre>
+<div id="jdebug">
+</div>
+
+
+<script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+
+<script src="https://webrtc.github.io/adapter/adapter-latest.js"></script>
+<script src="js/debug.js" async></script>
+<script src="js/ajaxerror.js" async></script>
+<script src="js/scan.js" async></script>
+
+
+</body>
+
+</html>

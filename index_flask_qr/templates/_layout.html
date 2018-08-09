@@ -304,22 +304,6 @@
     {%- endblock %}
   </div>
 
-
-
-  <div id="webcam">
-    <p>
-      <video id="video" autoplay="autoplay"></video>
-    </p>
-    <p>
-      <input type="button" id="buttonSnap" value="Take screenshot" disabled="disabled" onclick="snapshot()" />
-    </p>
-    <p>
-      <input type="button" id="buttonStart" value="Start" disabled="disabled" onclick="start()" />
-      <input type="button" id="buttonStop" value="Stop" disabled="disabled" onclick="stop()" />
-    </p>
-    <p><canvas id="canvas"></canvas></p>
-  </div>
-
 </main>
 
 
@@ -349,7 +333,6 @@
 <script src="{{ url_for('index') }}js/debug.js"></script>
 <script src="{{ url_for('index') }}js/functions.js"></script>
 <script src="{{ url_for('index') }}js/user.js"></script>
-<script src="{{ url_for('index') }}js/webcam.js"></script>
 
 
 

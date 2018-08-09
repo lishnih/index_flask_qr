@@ -123,3 +123,4 @@ wsgi_debug.py
 index_flask_qr.service
 index_flask_qr/test/
 index_flask_qr/templates/custom
+snapshots
